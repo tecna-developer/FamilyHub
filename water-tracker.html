@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Water Tracker — familyHub</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #FAF7F1;
+      --card: #FFFFFF;
+      --line: #E7E1D6;
+      --ink: #2B2A25;
+      --muted: #8A8577;
+      --sage: #6B8F71;
+      --sage-dark: #4F6F52;
+      --clay: #B97452;
+      --gold: #E3A23D;
+      --bloom: #E1735E;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      padding: 32px 16px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .wt__card {
+      width: 100%;
+      max-width: 380px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 1px 2px rgba(43, 42, 37, 0.04);
+    }
+
+    .wt__eyebrow {
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .wt__name {
+      font-family: 'Fraunces', serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 2px 0 20px;
+    }
+
+    /* ── Plant visual ──
+     The SVG below is drawn at a sample "40% of goal" state so you can see
+     how it looks. Leaves and the stem are grouped with classes/ids so you
+     can move them from JS: change the stem's y2, and toggle the
+     `is-visible` class on each leaf / the bloom group. */
+    .wt__visual {
+      display: flex;
+      justify-content: center;
+      margin: 4px 0 8px;
+    }
+
+    .wt__leaf {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .wt__leaf.is-visible {
+      opacity: 1;
+    }
+
+    .wt__stem {
+      transition: y2 0.6s ease;
+    }
+
+    .wt__bloom {
+      opacity: 0;
+      transform-origin: center;
+    }
+
+    .wt__bloom.is-visible {
+      opacity: 1;
+      animation: wt__pop 0.6s ease;
+    }
+
+    @keyframes wt__pop {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+
+      70% {
+        transform: scale(1.15);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .wt__leaf,
+      .wt__stem,
+      .wt__bloom {
+        transition: none;
+        animation: none;
+      }
+    }
+
+    .wt__stats {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .wt__amount {
+      font-family: 'Fraunces', serif;
+      font-size: 40px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1;
+    }
+
+    .wt__amount span {
+      font-size: 16px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .wt__sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .wt__sub strong {
+      color: var(--sage-dark);
+    }
+
+    .wt__goal-edit {
+      background: none;
+      border: none;
+      color: var(--sage-dark);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-family: inherit;
+    }
+
+    .wt__goal-edit:hover {
+      background: #F0EEE6;
+    }
+
+    /* Editable-goal row — hidden by default, show it (display: flex) from JS
+     when the user clicks "edit goal" */
+    .wt__goal-row {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .wt__goal-row.is-visible {
+      display: flex;
+    }
+
+    .wt__goal-input {
+      width: 64px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      padding: 3px 6px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+    }
+
+    .wt__track {
+      height: 6px;
+      background: #F0EEE6;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 14px 0 20px;
+    }
+
+    .wt__track-fill {
+      height: 100%;
+      width: 0%;
+      /* set this from JS, e.g. el.style.width = percent + '%' */
+      background: var(--sage);
+      border-radius: 999px;
+      transition: width 0.5s ease;
+    }
+
+    .wt__quick {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .wt__chip {
+      flex: 1;
+      padding: 10px 0;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #FCFBF8;
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .wt__chip:hover {
+      border-color: var(--sage);
+      background: #F3F6F2;
+    }
+
+    .wt__chip:focus-visible {
+      outline: 2px solid var(--sage-dark);
+      outline-offset: 2px;
+    }
+
+    .wt__custom {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .wt__custom input {
+      flex: 1;
+      min-width: 0;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+    }
+
+    .wt__custom input:focus-visible {
+      outline: 2px solid var(--sage-dark);
+      outline-offset: 1px;
+    }
+
+    .wt__add-btn {
+      padding: 10px 16px;
+      border-radius: 12px;
+      border: none;
+      background: var(--gold);
+      color: #3A2B12;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .wt__add-btn:hover {
+      filter: brightness(1.05);
+    }
+
+    .wt__add-btn:focus-visible {
+      outline: 2px solid var(--sage-dark);
+      outline-offset: 2px;
+    }
+
+    /* Goal-reached banner — hidden by default, add .is-visible from JS */
+    .wt__banner {
+      display: none;
+      background: #F2EFE3;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: var(--sage-dark);
+      font-weight: 500;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+
+    .wt__banner.is-visible {
+      display: block;
+    }
+
+    .wt__log-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .wt__reset {
+      background: none;
+      border: none;
+      color: var(--clay);
+      font-size: 12px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .wt__log-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      max-height: 140px;
+      overflow-y: auto;
+    }
+
+    .wt__log-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+      color: var(--ink);
+    }
+
+    .wt__log-item:last-child {
+      border-bottom: none;
+    }
+
+    .wt__log-time {
+      color: var(--muted);
+      font-size: 12px;
+      margin-left: 8px;
+    }
+
+    .wt__log-remove {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+      padding: 2px 6px;
+    }
+
+    .wt__log-remove:hover {
+      color: var(--bloom);
+    }
+
+    /* Empty-state message — hidden by default when the list has items;
+     show it (display: block) from JS when the log array is empty */
+    .wt__log-empty {
+      display: none;
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    .wt__log-empty.is-visible {
+      display: block;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="wt__card">
+
+    <span class="wt__eyebrow">Water · familyHub</span>
+    <h2 class="wt__name" id="memberName">Anna</h2>
+
+    <!-- ── Plant visual ──
+         Sample state shown: stem at ~40%, first leaf visible.
+         From JS: recalculate stem y2, toggle .is-visible on each .wt__leaf
+         at your thresholds (25/50/75%), and toggle .wt__bloom.is-visible
+         when goal is reached. -->
+    <div class="wt__visual">
+      <svg width="140" height="200" viewBox="0 0 200 200" aria-hidden="true">
+        <ellipse cx="100" cy="182" rx="34" ry="8" fill="#EDE8DB" />
+        <path d="M72 150 L128 150 L120 182 L80 182 Z" fill="var(--clay)" />
+        <rect x="72" y="144" width="56" height="10" rx="3" fill="var(--clay)" />
+
+        <line id="fhStem" class="wt__stem" x1="100" y1="178" x2="100" y2="126" stroke="var(--sage-dark)"
+          stroke-width="4" stroke-linecap="round" />
+
+        <ellipse id="fhLeaf1" class="wt__leaf is-visible" cx="82" cy="166" rx="16" ry="8" fill="var(--sage)"
+          transform="rotate(-25 82 166)" />
+        <ellipse id="fhLeaf2" class="wt__leaf" cx="118" cy="191" rx="16" ry="8" fill="var(--sage)"
+          transform="rotate(25 118 191)" />
+        <ellipse id="fhLeaf3" class="wt__leaf" cx="86" cy="138" rx="14" ry="7" fill="var(--sage)"
+          transform="rotate(-20 86 138)" />
+
+        <g id="fhBloom" class="wt__bloom">
+          <circle cx="100" cy="120" r="7" fill="var(--gold)" />
+          <circle cx="90" cy="126" r="6" fill="var(--bloom)" />
+          <circle cx="110" cy="126" r="6" fill="var(--bloom)" />
+          <circle cx="100" cy="114" r="6" fill="var(--bloom)" />
+        </g>
+      </svg>
+    </div>
+
+    <div class="wt__stats">
+      <div class="wt__amount">
+        <span id="consumedValue">800</span> <span>/ <span id="goalValue">2000</span> ml</span>
+      </div>
+
+      <div class="wt__sub" id="fhSubDefault">
+        <strong><span id="remainingValue">1200</span> ml</strong> left today
+        ·
+        <button class="wt__goal-edit" id="editGoalBtn">edit goal</button>
+      </div>
+
+      <!-- Editable-goal row: show this (add .is-visible) and hide wt__sub above when editing -->
+      <div class="wt__goal-row" id="goalEditRow">
+        <input class="wt__goal-input" type="number" id="goalInput" value="2000">
+        <button class="wt__goal-edit" id="saveGoalBtn">save</button>
+      </div>
+    </div>
+
+    <div class="wt__track">
+      <div class="wt__track-fill" id="trackFill" style="width: 40%;"></div>
+    </div>
+
+    <!-- Quick-add presets. data-amount is there so one click handler
+         can read the value instead of writing three separate handlers. -->
+    <div class="wt__quick">
+      <button class="wt__chip" data-amount="150">+150 ml</button>
+      <button class="wt__chip" data-amount="250">+250 ml</button>
+      <button class="wt__chip" data-amount="350">+350 ml</button>
+    </div>
+
+    <div class="wt__custom">
+      <input type="number" inputmode="numeric" id="customAmountInput" placeholder="Custom amount, ml"
+        aria-label="Custom water amount in millilitres">
+      <button class="wt__add-btn" id="customAddBtn">Add</button>
+    </div>
+
+    <!-- Goal-reached banner: add .is-visible when consumed >= goal -->
+    <div class="wt__banner" id="goalBanner">You hit today's goal — nice work 🌸</div>
+
+    <div class="wt__log-title">
+      <span>Today's log</span>
+      <button class="wt__reset" id="resetDayBtn">reset day</button>
+    </div>
+
+    <!-- Empty state: toggle .is-visible on this and hide/show the <ul> based on whether the log has entries -->
+    <p class="wt__log-empty is-visible" id="logEmpty">Nothing logged yet — add your first glass above.</p>
+
+    <!-- Log list: build <li class="wt__log-item"> items here from JS.
+         One sample item left in as a markup reference — remove it or
+         clear the list before rendering your real data. -->
+    <ul class="wt__log-list" id="logList">
+      <li class="wt__log-item" data-id="example">
+        <span>
+          +250 ml
+          <span class="wt__log-time">14:05</span>
+        </span>
+        <button class="wt__log-remove" aria-label="Remove 250 ml entry">×</button>
+      </li>
+    </ul>
+
+    <div aria-live="polite" class="sr-only" id="fhAnnouncer">
+      800 of 2000 millilitres logged today.
+    </div>
+
+  </div>
+
+</body>
+
+</html>

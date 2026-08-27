@@ -1,9 +1,14 @@
 import "./App.css";
+import WaterTracker from "./widgets/WaterTreker/WaterTracker";
 
 function App() {
   return (
     <>
-      <h1>Hello!</h1>
+      <header>
+        <img src="logo.svg" alt="FamilyHub logo" />
+        <h1>FamilyHub</h1>
+      </header>
+      <WaterTracker memberName="Anna" initialGoal={2000} />
     </>
   );
 }
