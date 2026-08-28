@@ -6,7 +6,14 @@ header {
     margin-bottom: 40px;
 }
 
-.wt__card {
+main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 30px;
+    align-items: start;
+}
+
+.card {
     width: 100%;
     max-width: 380px;
     background: var(--card);
@@ -16,14 +23,14 @@ header {
     box-shadow: 0 1px 2px rgba(43, 42, 37, 0.04);
 }
 
-.wt__eyebrow {
+.eyebrow {
     font-size: 12px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--muted);
 }
 
-.wt__name {
+.card__title {
     font-family: 'Fraunces', serif;
     font-size: 22px;
     font-weight: 600;

@@ -1,14 +1,16 @@
 import "./App.css";
-import WaterTracker from "./widgets/WaterTreker/WaterTracker";
+import Header from "./components/WaterTracker/Header";
+import WaterTracker from "./components/WaterTracker/WaterTracker";
+import WeatherCard from "./components/WeatherCard/WeatherCard";
 
 function App() {
   return (
     <>
-      <header>
-        <img src="logo.svg" alt="FamilyHub logo" />
-        <h1>FamilyHub</h1>
-      </header>
-      <WaterTracker memberName="Anna" initialGoal={2000} />
+      <Header />
+      <main>
+        <WaterTracker memberName="Anna" initialGoal={2000} />
+        <WeatherCard />
+      </main>
     </>
   );
 }
