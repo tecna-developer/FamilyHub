@@ -15,7 +15,7 @@
 - [x] Создать Header
 - [x] Создать Greeting
 - [x] Создать Card
-- [ ] Разбить Dashboard на компоненты
+- [x] Разбить Dashboard на компоненты
 
 ## 2. useState
 
