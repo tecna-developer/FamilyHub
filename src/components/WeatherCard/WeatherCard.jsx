@@ -1,3 +1,4 @@
+import "./WeatherCard.css";
 import Card from "../Card/Card";
 import ConditionIcon from "./ConditionIcon";
 import CurrentTemp from "./CurrentTemp";

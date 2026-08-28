@@ -1,0 +1,307 @@
+/* ── Plant visual ──
+     The SVG below is drawn at a sample "40% of goal" state so you can see
+     how it looks. Leaves and the stem are grouped with classes/ids so you
+     can move them from JS: change the stem's y2, and toggle the
+     `is-visible` class on each leaf / the bloom group. */
+.plant-visual {
+    display: flex;
+    justify-content: center;
+    margin: 4px 0 8px;
+}
+
+.wt__leaf {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.wt__leaf.is-visible {
+    opacity: 1;
+}
+
+.wt__stem {
+    transition: y2 0.6s ease;
+}
+
+.wt__bloom {
+    opacity: 0;
+    transform-origin: center;
+}
+
+.wt__bloom.is-visible {
+    opacity: 1;
+    animation: wt__pop 0.6s ease;
+}
+
+@keyframes wt__pop {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    70% {
+        transform: scale(1.15);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .wt__leaf, .wt__stem, .wt__bloom {
+        transition: none;
+        animation: none;
+    }
+}
+
+.wt__stats {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.wt__amount {
+    font-family: 'Fraunces', serif;
+    font-size: 40px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1;
+}
+
+.wt__amount span {
+    font-size: 16px;
+    color: var(--muted);
+    font-weight: 500;
+}
+
+.wt__sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 6px;
+}
+
+.wt__sub strong {
+    color: var(--sage-dark);
+}
+
+.wt__goal-edit {
+    background: none;
+    border: none;
+    color: var(--sage-dark);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-family: inherit;
+}
+
+.wt__goal-edit:hover {
+    background: #F0EEE6;
+}
+
+/* Editable-goal row — hidden by default, show it (display: flex) from JS
+     when the user clicks "edit goal" */
+.wt__goal-row {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.wt__goal-row.is-visible {
+    display: flex;
+}
+
+.wt__goal-input {
+    width: 64px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    padding: 3px 6px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+}
+
+.wt__track {
+    height: 6px;
+    background: #F0EEE6;
+    border-radius: 999px;
+    overflow: hidden;
+    margin: 14px 0 20px;
+}
+
+.wt__track-fill {
+    height: 100%;
+    width: 0%;
+    /* set this from JS, e.g. el.style.width = percent + '%' */
+    background: var(--sage);
+    border-radius: 999px;
+    transition: width 0.5s ease;
+}
+
+.wt__quick {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.wt__chip {
+    flex: 1;
+    padding: 10px 0;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: #FCFBF8;
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.wt__chip:hover {
+    border-color: var(--sage);
+    background: #F3F6F2;
+}
+
+.wt__chip:focus-visible {
+    outline: 2px solid var(--sage-dark);
+    outline-offset: 2px;
+}
+
+.wt__custom {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.wt__custom input {
+    flex: 1;
+    min-width: 0;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+}
+
+.wt__custom input:focus-visible {
+    outline: 2px solid var(--sage-dark);
+    outline-offset: 1px;
+}
+
+.wt__add-btn {
+    padding: 10px 16px;
+    border-radius: 12px;
+    border: none;
+    background: var(--gold);
+    color: #3A2B12;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.wt__add-btn:hover {
+    filter: brightness(1.05);
+}
+
+.wt__add-btn:focus-visible {
+    outline: 2px solid var(--sage-dark);
+    outline-offset: 2px;
+}
+
+/* Goal-reached banner — hidden by default, add .is-visible from JS */
+.wt__banner {
+    display: none;
+    background: #F2EFE3;
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--sage-dark);
+    font-weight: 500;
+    margin-bottom: 18px;
+    text-align: center;
+}
+
+.wt__banner.is-visible {
+    display: block;
+}
+
+.wt__log-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+}
+
+.wt__reset {
+    background: none;
+    border: none;
+    color: var(--clay);
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.wt__log-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 140px;
+    overflow-y: auto;
+}
+
+.wt__log-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--ink);
+}
+
+.wt__log-item:last-child {
+    border-bottom: none;
+}
+
+.wt__log-time {
+    color: var(--muted);
+    font-size: 12px;
+    margin-left: 8px;
+}
+
+.wt__log-remove {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    padding: 2px 6px;
+}
+
+.wt__log-remove:hover {
+    color: var(--bloom);
+}
+
+/* Empty-state message — hidden by default when the list has items;
+     show it (display: block) from JS when the log array is empty */
+.wt__log-empty {
+    display: none;
+    font-size: 13px;
+    color: var(--muted);
+    text-align: center;
+    padding: 10px 0;
+}
+
+.wt__log-empty.is-visible {
+    display: block;
+}

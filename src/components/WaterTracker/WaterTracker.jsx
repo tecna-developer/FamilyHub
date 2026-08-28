@@ -1,3 +1,4 @@
+import "./WaterTracker.css";
 import CustomAmountForm from "./CustomAmountForm";
 import PlantVisual from "./PlantVisual";
 import QuickAdd from "./QuickAdd";

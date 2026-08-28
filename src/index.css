@@ -1,5 +1,7 @@
  * {
    box-sizing: border-box;
+   margin: 0;
+   padding: 0;
    /* border: 2px solid red */
  }
 
@@ -16,11 +18,17 @@
    --bloom: #E1735E;
  }
 
+ #root {
+   width: 100%;
+   max-width: 1200px;
+ }
+
  body {
    margin: 0 auto;
+   min-width: 0;
    font-family: 'Inter', -apple-system, sans-serif;
    background: var(--bg);
-   /* padding: 32px 16px; */
+   padding-inline: 16px;
    display: flex;
    justify-content: center;
  }

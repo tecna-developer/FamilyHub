@@ -1,0 +1,100 @@
+.location {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 2px 0 20px;
+}
+
+/* ── Current conditions ── */
+.current {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.conditionIcon {
+    flex-shrink: 0;
+}
+
+.tempBlock {
+    min-width: 0;
+}
+
+.temp {
+    font-family: 'Fraunces', serif;
+    font-size: 44px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1;
+}
+
+.condition {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 6px;
+}
+
+.subRow {
+    display: flex;
+    gap: 16px;
+    font-size: 13px;
+    color: var(--muted);
+    padding: 12px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 18px;
+}
+
+.subRow strong {
+    color: var(--ink);
+    font-weight: 600;
+}
+
+/* ── Hourly forecast strip ── */
+.forecastTitle {
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+}
+
+.forecastRow {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+}
+
+.forecastItem {
+    flex: 1;
+    min-width: 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 6px;
+    border-radius: 12px;
+    background: #FCFBF8;
+    border: 1px solid var(--line);
+}
+
+/* Reserve a class for marking the current hour from JS,
+     e.g. add "isNow" to the forecastItem for the current slot */
+.forecastItem.isNow {
+    background: #F3F6F2;
+    border-color: var(--sage);
+}
+
+.forecastTime {
+    font-size: 11px;
+    color: var(--muted);
+}
+
+.forecastTemp {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+}
