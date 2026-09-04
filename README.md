@@ -38,8 +38,9 @@ because the shopping list needed a place to live.
 
 The plan itself lives in [ROADMAP.md](ROADMAP.md) (what to study and what to build at each
 stage), the boxes in [CHECKLIST.md](CHECKLIST.md), and the same thing as a map in
-[MINDMAP.md](MINDMAP.md), readable through [Markmap](https://markmap.js.org/repl). Those
-three are in Russian; the code and this file are in English.
+[MINDMAP.md](MINDMAP.md), readable through [Markmap](https://markmap.js.org/repl). The
+checklist and the mindmap are still in Russian — they are the files I tick daily; the code,
+the roadmap and this file are in English.
 
 ## What the first two stages produced
 

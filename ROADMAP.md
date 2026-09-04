@@ -1,137 +1,138 @@
-# FamilyHub — подробная дорожная карта
+# FamilyHub — the full roadmap
 
-Цель — не изучать React отдельно от практики, а постепенно собрать одно настоящее приложение для семьи.
+The point is not to study React apart from practice, but to build one real family app a
+piece at a time.
 
-## 0. Подготовка проекта
+## 0. Project setup
 
-**Изучить:** SPA, React, Vite, npm, Git.
+**Study:** SPA, React, Vite, npm, Git.
 
-**Практика:** создать проект на Vite, настроить ESLint, создать Git-репозиторий и сделать первый коммит.
+**Practice:** create a Vite project, set up ESLint, create a Git repository and make the first commit.
 
-**Результат:** пустой, но аккуратно настроенный проект.
+**Result:** an empty project, but a tidily configured one.
 
-## 1. JSX и компоненты
+## 1. JSX and components
 
-**Изучить:** JSX, компоненты, props, структуру `src`.
+**Study:** JSX, components, props, the shape of `src`.
 
-**Практика:** собрать главную страницу из `Header`, `Greeting`, `Card`, `WeatherCard`, `WaterCard` и `MoodCard`.
+**Practice:** assemble the main page from `Header`, `Greeting`, `Card`, `WeatherCard`, `WaterCard` and `MoodCard`.
 
-**Результат:** статичный Dashboard из небольших компонентов.
+**Result:** a static dashboard made of small components.
 
 ## 2. useState
 
-**Изучить:** состояние и обработчики событий.
+**Study:** state and event handlers.
 
-**Практика:** добавить кнопку `+250 мл` в трекер воды и выбор настроения по эмодзи.
+**Practice:** add a `+250 ml` button to the water tracker and an emoji mood picker.
 
-**Результат:** интерфейс реагирует на действия пользователя.
+**Result:** the interface responds to what the user does.
 
-## 3. Списки и map()
+## 3. Lists and map()
 
-**Изучить:** `map()`, `key`, условный рендеринг.
+**Study:** `map()`, `key`, conditional rendering.
 
-**Практика:** показать списки покупок и семейных задач.
+**Practice:** show the shopping list and the family task list.
 
-**Результат:** данные из массива превращаются в карточки и строки списка.
+**Result:** an array turns into cards and list rows.
 
-## 4. Формы
+## 4. Forms
 
-**Изучить:** контролируемые поля, `onChange`, `onSubmit`, базовую валидацию.
+**Study:** controlled fields, `onChange`, `onSubmit`, basic validation.
 
-**Практика:** формы добавления покупки и задачи.
+**Practice:** forms for adding a shopping item and a task.
 
-**Результат:** пользователь может добавлять собственные данные.
+**Result:** the user can add data of their own.
 
 ## 5. useEffect
 
-**Изучить:** `useEffect`, зависимости, жизненный цикл компонента.
+**Study:** `useEffect`, dependencies, the component lifecycle.
 
-**Практика:** приветствие по времени суток и текущая дата.
+**Practice:** a greeting that follows the time of day, and today's date.
 
-**Результат:** экран автоматически обновляет зависящую от времени информацию.
+**Result:** the screen refreshes whatever depends on time by itself.
 
 ## 6. LocalStorage
 
-**Изучить:** сохранение и чтение JSON из браузера.
+**Study:** writing and reading JSON in the browser.
 
-**Практика:** сохранять воду, настроение, покупки и задачи после перезагрузки.
+**Practice:** keep water, mood, shopping and tasks across a reload.
 
-**Результат:** личные данные не исчезают при закрытии страницы.
+**Result:** personal data survives closing the page.
 
 ## 7. React Router
 
-**Изучить:** маршруты, ссылки, вложенные страницы.
+**Study:** routes, links, nested pages.
 
-**Практика:** создать страницы Dashboard, Water, Mood, Shopping и Settings.
+**Practice:** build the Dashboard, Water, Mood, Shopping and Settings pages.
 
-**Результат:** приложение становится многостраничным SPA.
+**Result:** the app becomes a multi-page SPA.
 
 ## 8. Context API
 
-**Изучить:** контекст, Provider, `useContext`.
+**Study:** context, Provider, `useContext`.
 
-**Практика:** общие настройки: имя пользователя и светлая/тёмная тема.
+**Practice:** shared settings — the user's name and a light/dark theme.
 
-**Результат:** настройки доступны всем компонентам без передачи props через много уровней.
+**Result:** settings reach every component without passing props through many levels.
 
-## 9. Custom Hooks
+## 9. Custom hooks
 
-**Изучить:** правила хуков и выделение повторяющейся логики.
+**Study:** the rules of hooks and pulling repeated logic out.
 
-**Практика:** создать `useLocalStorage`, `useGreeting` и `useToday`.
+**Practice:** write `useLocalStorage`, `useGreeting` and `useToday`.
 
-**Результат:** компоненты становятся короче и понятнее.
+**Result:** components get shorter and easier to read.
 
-## 10. UI-компоненты
+## 10. UI components
 
-**Изучить:** композицию и переиспользование компонентов.
+**Study:** composition and reuse.
 
-**Практика:** сделать единые `Button`, `Card`, `Modal`, `ProgressBar`, `Input` и `Badge`.
+**Practice:** build one shared `Button`, `Card`, `Modal`, `ProgressBar`, `Input` and `Badge`.
 
-**Результат:** интерфейс выглядит цельно, а изменения делаются быстрее.
+**Result:** the interface looks like one thing, and changes take less work.
 
-## 11. Адаптивный CSS
+## 11. Responsive CSS
 
-**Изучить:** Flexbox, Grid, media queries, CSS Modules или другой выбранный способ стилизации.
+**Study:** Flexbox, Grid, media queries, CSS Modules or whichever styling approach I settle on.
 
-**Практика:** настроить Dashboard для компьютера, планшета и телефона; добавить ненавязчивые анимации.
+**Practice:** lay the dashboard out for desktop, tablet and phone; add unobtrusive animation.
 
-**Результат:** FamilyHub удобно использовать на любом устройстве.
+**Result:** FamilyHub is comfortable on any device.
 
-## 12. Работа с API
+## 12. Working with an API
 
-**Изучить:** `fetch`, `async/await`, загрузку и обработку ошибок.
+**Study:** `fetch`, `async/await`, loading and error handling.
 
-**Практика:** вывести погоду, цитату дня и случайный рецепт.
+**Practice:** show the weather, a quote of the day and a random recipe.
 
-**Результат:** приложение использует внешние данные.
+**Result:** the app uses data from outside itself.
 
-## 13. Оптимизация
+## 13. Performance
 
-**Изучить:** `React.memo`, `useMemo`, `useCallback` — и когда они действительно нужны.
+**Study:** `React.memo`, `useMemo`, `useCallback` — and when they are actually needed.
 
-**Практика:** проверить большой список покупок и убрать ненужные перерисовки.
+**Practice:** test a long shopping list and remove the renders that serve nothing.
 
-**Результат:** осознанная работа с производительностью.
+**Result:** performance handled deliberately rather than by reflex.
 
 ## 14. Supabase
 
-**Изучить:** аутентификацию, базу данных и синхронизацию.
+**Study:** authentication, the database, synchronisation.
 
-**Практика:** добавить вход и хранить данные семьи в облаке.
+**Practice:** add sign-in and keep the family's data in the cloud.
 
-**Результат:** FamilyHub можно использовать на нескольких устройствах.
+**Result:** FamilyHub works across several devices.
 
 ## 15. PWA
 
-**Изучить:** manifest, service worker, офлайн-режим.
+**Study:** manifest, service worker, offline mode.
 
-**Практика:** сделать приложение устанавливаемым на телефон.
+**Practice:** make the app installable on a phone.
 
-**Результат:** FamilyHub ощущается как настоящее мобильное приложение.
+**Result:** FamilyHub feels like a real mobile app.
 
-## 16. Рефакторинг
+## 16. Refactoring
 
-**Практика:** разделить большие компоненты, убрать дублирование, улучшить названия, привести код к единому стилю.
+**Practice:** split the large components, remove duplication, improve names, bring the code to one style.
 
-**Результат:** чистый проект, который не стыдно показать в портфолио.
+**Result:** a clean project worth showing in a portfolio.
